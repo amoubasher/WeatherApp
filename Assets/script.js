@@ -7,8 +7,9 @@ function getGeoLocation (query, limit = 5) {
 }
 
 
-function getCurrentWeather({lat, lon, units}){
+function getCurrentWeather({arguments}){
     return fetch ('')
+    // ${arguments.lan} & ${arguments.lon} & ${imperial} & ${api_key}
 }
 
 
@@ -16,7 +17,7 @@ getGeoLocation('Anaheim')
 .then(response => response.json())
 .then(data => {
     var {lat, lon} = data[0];
-    getCurrentWeather({lat, lon})
+    getCurrentWeather({lat: data[0].lat, lon: data[0].lon})
     .then(weatherResponse => weatherResponse.json())
     .then(weatherData => {
         document.body.textContent = JSON.stringify(weatherData, null, 2)
