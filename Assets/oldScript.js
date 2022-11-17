@@ -11,6 +11,23 @@ input.addEventListener('keyup', function(event){
     }
 })
 
+var previousSearchHistory = localStorage.getItem('history')
+if (previousSearchHistory) {
+    previousSearchHistory = JSON.parse(previousSearchHistory)
+} else {
+    previousSearchHistory = []
+}
+
+for (var i=0; i <previousSearchHistory.length; i++){
+    var historyBtn = document.createElement('button')
+    var historyItem = previousSearchHistory[i]
+    historyBtn.textContent = historyItem
+    historyBtn.addEventListener('click', function(event){
+        createWeatherDisplay(event.target.textContent)
+    })
+    document.body.appendChild(historyBtn)
+}
+
 // var button = document.querySelector('#button')
 // button.addEventListener('click', function(event){
 //     if (event.click === 'click'){
@@ -28,6 +45,23 @@ function getCurrentWeather(arguments){
     // https://api.openweathermap.org/data/3.0
     return fetch (`https://api.openweathermap.org/data/2.5/weather?lat=${arguments.lat}&lon=${arguments.lon}&units=${'imperial'}&appid=${api_key}`)
     // ${arguments.lan} & ${arguments.lon} & ${imperial} & ${api_key}
+}
+
+function addToHistory(location){
+    var searchHistory = localStorage.getItem('history')
+    if (searchHistory){
+        searchHistory = JSON.parse(searchHistory)
+        
+        if(searchHistory.includes(location)){
+            return
+        }
+
+        searchHistory.push(location)
+        localStorage.setItem('history', JSON.stringify(searchHistory))
+    } else {
+        searchHistory = [location]
+        localStorage.setItem('history', JSON.stringify(searchHistory))
+    }
 }
 
 function createWeatherDisplay(location){
@@ -51,6 +85,7 @@ function createWeatherDisplay(location){
                 currentWeatherStatement.textContent = `${weatherData.weather[0].main}: it is currently ${weatherData.weather[0].description}`
                 document.body.appendChild(weatherPicture)
                 document.body.appendChild(currentWeatherStatement)
+                addToHistory(location)
                 // document.body.textContent = JSON.stringify(weatherData, null, 2)
             })
             .catch(error => {
