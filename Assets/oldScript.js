@@ -54,7 +54,7 @@ function getCurrentWeather(arguments){
 }
 
 function getFiveDayForecast(arguments){
-    return fetch (`https://api.openweathermap.org/data/2.5/forecast?lat=${arguments.lat}&lon=${arguments.lon}&units=imperial&appid=${api_key}`)
+    return fetch (`https://api.openweathermap.org/data/2.5/forecast?lat=${arguments.lat}&lon=${arguments.lon}&units=${'imperial'}&appid=${api_key}`)
 }
 
 
