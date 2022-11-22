@@ -25,7 +25,7 @@ for (var i=0; i <previousSearchHistory.length; i++){
     historyBtn.addEventListener('click', function(event){
         createWeatherDisplay(event.target.textContent)
     })
-    document.body.appendChild(historyBtn)
+    document.querySelector('.history').append(historyBtn)
 }
 
 var todayDate = moment()
