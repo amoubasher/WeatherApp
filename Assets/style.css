@@ -1,0 +1,9 @@
+* {
+    color: white;
+    background-image: url(./Images/weatherapp.webp);
+}
+
+#forecast{
+    display: flex;
+    margin: auto;
+}

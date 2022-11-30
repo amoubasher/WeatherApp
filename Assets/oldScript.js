@@ -118,6 +118,7 @@ function createWeatherDisplay(location){
             .then(forecastData => {
                 for (i=0; i<5; i++){
                     var forecastDataDiv = document.createElement('div')
+                    forecastDataDiv.setAttribute('style', 'margin: 50px;')
                     var dayHeader = document.createElement('h3')
                     dayHeader.textContent = todayDate.add(1, "days").format("MM/D/YYYY")
                     var forecastTempData = document.createElement('p')
