@@ -43,7 +43,7 @@ var forecast = document.querySelector('#forecast')
 var api_key = 'eb7f528cc275c1424ff1ab19a726e7c7';
 
 function getGeoLocation (query, limit = 5) {
-    return fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${query}&limit=${5}&appid=${api_key}`)
+    return fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${query}&limit=${5}&appid=${api_key}`)
 }
 
 
