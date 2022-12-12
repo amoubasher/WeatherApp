@@ -4,11 +4,16 @@
 // Server-Side APIs Day 3 02:13:15
 
 var input = document.querySelector('#input')
+var button = document.querySelector('#button')
 
 input.addEventListener('keyup', function(event){
     if (event.key === 'Enter'){
         createWeatherDisplay(event.target.value)
     }
+})
+
+button.addEventListener('click', function(event){
+    createWeatherDisplay(input.value)
 })
 
 var previousSearchHistory = localStorage.getItem('history')
@@ -17,6 +22,8 @@ if (previousSearchHistory) {
 } else {
     previousSearchHistory = []
 }
+
+document.querySelector('.history').innerHTML=""
 
 for (var i=0; i <previousSearchHistory.length; i++){
     var historyBtn = document.createElement('button')
@@ -88,6 +95,7 @@ function createWeatherDisplay(location){
             document.body.appendChild(errorEl)
         } else {
             // For Current Weather
+            currentDay.innerHTML=""
             getCurrentWeather({ lat: data[0].lat, lon: data[0].lon })
             .then(weatherResponse => weatherResponse.json())
             .then(weatherData => {
@@ -116,18 +124,24 @@ function createWeatherDisplay(location){
             getFiveDayForecast({ lat: data[0].lat, lon: data[0].lon })
             .then(forecastFiveResponse => forecastFiveResponse.json())
             .then(forecastData => {
-                for (i=0; i<5; i++){
+                console.log(forecastData)
+                forecast.innerHTML=""
+                for (i=2; i<forecastData.list.length; i=i+8){
+                    var weatherPicture2 = document.createElement('img')
+                    weatherPicture2.src = `http://openweathermap.org/img/wn/${forecastData.list[i].weather[0].icon}@2x.png`
                     var forecastDataDiv = document.createElement('div')
                     forecastDataDiv.setAttribute('style', 'margin: 50px;')
                     var dayHeader = document.createElement('h3')
-                    dayHeader.textContent = todayDate.add(1, "days").format("MM/D/YYYY")
+                    dayHeader.textContent = moment(forecastData.list[i].dt_txt).format("MM/D/YYYY")
                     var forecastTempData = document.createElement('p')
                     forecastTempData.textContent=`Temperature: ${forecastData.list[i].main.temp} F`
                     var forecastWindData = document.createElement('p')
                     forecastWindData.textContent=`Wind Speed: ${forecastData.list[i].wind.speed} MPH`
                     var forecastHumidityData = document.createElement('p')
                     forecastHumidityData.textContent=`Humidity: ${forecastData.list[i].main.humidity}%`
-                    forecastDataDiv.append(dayHeader, forecastTempData, forecastWindData, forecastHumidityData)
+                    // var forecastWeatherStatement = document.createElement('p')
+                    // forecastWeatherStatement.textContent = `${forecastData.weather[i].main}: it will be ${forecastData.weather[i].description}`
+                    forecastDataDiv.append(weatherPicture2, dayHeader, forecastTempData, forecastWindData, forecastHumidityData)
                     forecast.append(forecastDataDiv)
                 }
             })
