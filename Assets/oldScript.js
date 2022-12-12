@@ -3,9 +3,11 @@
 // Server-Side APIs Day 3 02:00:00
 // Server-Side APIs Day 3 02:13:15
 
+// This logic gets the id's for the search code.
 var input = document.querySelector('#input')
 var button = document.querySelector('#button')
 
+// This logic will generate the forcast whether the user uses the keyboard or the search button
 input.addEventListener('keyup', function(event){
     if (event.key === 'Enter'){
         createWeatherDisplay(event.target.value)
@@ -23,6 +25,8 @@ if (previousSearchHistory) {
     previousSearchHistory = []
 }
 
+
+// This logic stores and displays the search history of the user.
 document.querySelector('.history').innerHTML=""
 
 for (var i=0; i <previousSearchHistory.length; i++){
@@ -35,6 +39,7 @@ for (var i=0; i <previousSearchHistory.length; i++){
     document.querySelector('.history').append(historyBtn)
 }
 
+// This logic gets the current day/time for the current weather
 var todayDate = moment()
 $("#date").text(todayDate.format("MMMM Do, YYYY"))
 
@@ -47,6 +52,11 @@ var forecast = document.querySelector('#forecast')
 //     }
 // })
 
+
+// Start API logic here, 3 APIs
+// One for location
+// One for current weather
+// One for the 5-day forecast
 var api_key = 'eb7f528cc275c1424ff1ab19a726e7c7';
 
 function getGeoLocation (query, limit = 5) {
@@ -64,7 +74,7 @@ function getFiveDayForecast(arguments){
     return fetch (`https://api.openweathermap.org/data/2.5/forecast?lat=${arguments.lat}&lon=${arguments.lon}&units=${'imperial'}&appid=${api_key}`)
 }
 
-
+// Adds search history
 function addToHistory(location){
     var searchHistory = localStorage.getItem('history')
     if (searchHistory){
@@ -82,6 +92,8 @@ function addToHistory(location){
     }
 }
 
+
+// Display current weather and 5-day forecast
 function createWeatherDisplay(location){
     return getGeoLocation(location)
     .then(function(response){
