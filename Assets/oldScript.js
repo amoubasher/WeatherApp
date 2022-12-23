@@ -112,7 +112,7 @@ function createWeatherDisplay(location){
             .then(weatherResponse => weatherResponse.json())
             .then(weatherData => {
                 var weatherPicture = document.createElement('img')
-                weatherPicture.src = `http://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`
+                weatherPicture.src = `https://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`
                 var currentDateDiv = document.createElement('div')
                 var currentWeatherStatement = document.createElement('p')
                 var currentTemp = document.createElement('p')
@@ -140,7 +140,7 @@ function createWeatherDisplay(location){
                 forecast.innerHTML=""
                 for (i=2; i<forecastData.list.length; i=i+8){
                     var weatherPicture2 = document.createElement('img')
-                    weatherPicture2.src = `http://openweathermap.org/img/wn/${forecastData.list[i].weather[0].icon}@2x.png`
+                    weatherPicture2.src = `https://openweathermap.org/img/wn/${forecastData.list[i].weather[0].icon}@2x.png`
                     var forecastDataDiv = document.createElement('div')
                     forecastDataDiv.setAttribute('style', 'margin: 50px;')
                     var dayHeader = document.createElement('h3')
